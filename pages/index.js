@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { questionsList } from "../questions";
+import Image from 'next/image';
 
 export default function Home() {
   const [selectedChest, setSelectedChest] = useState(null);
@@ -11,11 +12,19 @@ export default function Home() {
         {questionsList.map((chest) => (
           <button
             key={chest.chest}
-            className="bg-yellow-300 hover:bg-yellow-400 rounded-2xl shadow-xl text-2xl px-8 py-12 transition-all border-4 border-yellow-500"
+            className="relative bg-transparent hover:scale-105 rounded-2xl shadow-xl text-2xl transition-all duration-300 transform"
             onClick={() => setSelectedChest(chest)}
           >
-            <span className="block text-5xl mb-2">🧰</span>
-            №{chest.chest}
+            <Image
+              src={`/images/Sunduk_0${chest.chest}.png`}
+              alt={`Сундук ${chest.chest}`}
+              width={200}
+              height={200}
+              className="rounded-2xl"
+            />
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-shadow">
+              №{chest.chest}
+            </div>
           </button>
         ))}
       </div>
@@ -72,10 +81,32 @@ function Game({ questions, onReset }) {
     <div className="fixed inset-0 bg-black/70 flex flex-col items-center justify-center z-50">
       <audio src="/ticking.mp3" ref={tickingRef} loop />
       <audio src="/bell.mp3" ref={bellRef} />
-      <div className="bg-white rounded-3xl shadow-xl p-12 flex flex-col items-center">
+      <div className="bg-white rounded-3xl shadow-xl p-12 flex flex-col items-center relative">
+        <button 
+          onClick={onReset}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
         <div className="text-2xl font-bold mb-6">{questions[qIndex]}</div>
         <div className="text-6xl font-mono text-orange-500 mb-2">{timer > 0 ? timer : "Время!"}</div>
       </div>
     </div>
   );
+}
+
+// Добавляем стили для тени текста
+const styles = `
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+`;
+
+// Добавляем стили в head
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet);
 }
