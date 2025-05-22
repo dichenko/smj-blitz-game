@@ -18,10 +18,9 @@ export default function Home() {
     setSelectedChest(null);
   };
 
-  // Разбиваем сундуки на три ряда: 4-3-4
-  const firstRow = [1, 2, 3, 4];
-  const middleRow = [5, 6, 7];
-  const lastRow = [8, 9, 10, 11];
+  // Разбиваем сундуки на два ряда: 6-5
+  const firstRow = [1, 2, 3, 4, 5, 6];
+  const secondRow = [7, 8, 9, 10, 11];
 
   const renderChest = (chestNumber) => {
     const chest = questionsList.find(q => q.chest === chestNumber) || {
@@ -44,8 +43,8 @@ export default function Home() {
           <Image
             src={`/images/Sunduk_${chestNumber.toString().padStart(2, '0')}.png`}
             alt={`Сундук ${chestNumber}`}
-            width={230}
-            height={230}
+            width={200}
+            height={200}
             className="rounded-2xl"
           />
         </button>
@@ -70,19 +69,15 @@ export default function Home() {
       />
 
       <div className="relative z-10 flex flex-col items-center">
-        <h1 className="text-6xl mb-16">Выбери сундук!</h1>
-        <div className="flex flex-col gap-12 max-w-7xl mx-auto px-4">
+        <h1 className="text-6xl mb-12">Выбери сундук!</h1>
+        <div className="flex flex-col gap-8 max-w-[1400px] mx-auto px-4">
           {/* Первый ряд */}
-          <div className="grid grid-cols-4 gap-12">
+          <div className="grid grid-cols-6 gap-6">
             {firstRow.map(renderChest)}
           </div>
-          {/* Средний ряд */}
-          <div className="grid grid-cols-3 gap-12 mx-auto">
-            {middleRow.map(renderChest)}
-          </div>
-          {/* Последний ряд */}
-          <div className="grid grid-cols-4 gap-12">
-            {lastRow.map(renderChest)}
+          {/* Второй ряд */}
+          <div className="grid grid-cols-5 gap-6 mx-auto">
+            {secondRow.map(renderChest)}
           </div>
         </div>
       </div>
