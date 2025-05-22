@@ -12,7 +12,7 @@ export default function Home() {
         src="/images/Фон-9.png"
         alt="Background"
         fill
-        className="object-cover z-0"
+        className="object-none object-right-top z-0"
         priority
       />
 
