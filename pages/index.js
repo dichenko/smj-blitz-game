@@ -6,28 +6,58 @@ export default function Home() {
   const [selectedChest, setSelectedChest] = useState(null);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-yellow-50 to-orange-100">
-      <h1 className="text-4xl font-bold mb-8">Выбери сундук!</h1>
-      <div className="grid grid-cols-3 gap-8">
-        {questionsList.map((chest) => (
-          <button
-            key={chest.chest}
-            className="relative bg-transparent hover:scale-105 rounded-2xl shadow-xl text-2xl transition-all duration-300 transform"
-            onClick={() => setSelectedChest(chest)}
-          >
-            <Image
-              src={`/images/Sunduk_0${chest.chest}.png`}
-              alt={`Сундук ${chest.chest}`}
-              width={200}
-              height={200}
-              className="rounded-2xl"
-            />
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-shadow">
-              №{chest.chest}
-            </div>
-          </button>
-        ))}
+    <div className="min-h-screen flex flex-col items-center justify-center relative">
+      {/* Фоновое изображение */}
+      <Image
+        src="/images/Фон-9.png"
+        alt="Background"
+        fill
+        className="object-cover z-0"
+        priority
+      />
+      
+      {/* Логотип */}
+      <div className="absolute top-4 right-4 z-10">
+        <Image
+          src="/images/New-Logo-Color (2).png"
+          alt="Smart J Logo"
+          width={150}
+          height={50}
+          priority
+        />
       </div>
+
+      <div className="relative z-10 flex flex-col items-center">
+        <h1 className="text-4xl font-bold mb-8 text-white text-shadow">Выбери сундук!</h1>
+        <div className="grid grid-cols-4 gap-8 max-w-6xl mx-auto px-4">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((chestNumber) => {
+            const chest = questionsList.find(q => q.chest === chestNumber) || {
+              chest: chestNumber,
+              questions: ["Вопрос будет добавлен позже"]
+            };
+            
+            return (
+              <button
+                key={chestNumber}
+                className="relative bg-transparent hover:scale-105 rounded-2xl shadow-xl text-2xl transition-all duration-300 transform"
+                onClick={() => setSelectedChest(chest)}
+              >
+                <Image
+                  src={`/images/Sunduk_0${chestNumber}.png`}
+                  alt={`Сундук ${chestNumber}`}
+                  width={200}
+                  height={200}
+                  className="rounded-2xl"
+                />
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-shadow">
+                  №{chestNumber}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {selectedChest && (
         <Game questions={selectedChest.questions} onReset={() => setSelectedChest(null)} />
       )}
