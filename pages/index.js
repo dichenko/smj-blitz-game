@@ -18,6 +18,46 @@ export default function Home() {
     setSelectedChest(null);
   };
 
+  // Разбиваем сундуки на три ряда: 4-3-4
+  const firstRow = [1, 2, 3, 4];
+  const middleRow = [5, 6, 7];
+  const lastRow = [8, 9, 10, 11];
+
+  const renderChest = (chestNumber) => {
+    const chest = questionsList.find(q => q.chest === chestNumber) || {
+      chest: chestNumber,
+      questions: ["Вопрос будет добавлен позже"]
+    };
+    const isOpened = openedChests.includes(chestNumber);
+    
+    return (
+      <div key={chestNumber} className="relative">
+        <button
+          className={`w-full bg-transparent transition-all duration-300 transform ${
+            isOpened 
+              ? 'opacity-50 cursor-not-allowed filter grayscale' 
+              : 'hover:scale-105'
+          }`}
+          onClick={() => handleChestClick(chest)}
+          disabled={isOpened}
+        >
+          <Image
+            src={`/images/Sunduk_${chestNumber.toString().padStart(2, '0')}.png`}
+            alt={`Сундук ${chestNumber}`}
+            width={230}
+            height={230}
+            className="rounded-2xl"
+          />
+        </button>
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 px-6 py-2 rounded-lg min-w-[60px] text-center">
+          <span className="text-white text-2xl">
+            №{chestNumber}
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative">
       {/* Фоновое изображение */}
@@ -31,41 +71,19 @@ export default function Home() {
 
       <div className="relative z-10 flex flex-col items-center">
         <h1 className="text-6xl mb-16">Выбери сундук!</h1>
-        <div className="grid grid-cols-4 gap-12 max-w-7xl mx-auto px-4">
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((chestNumber) => {
-            const chest = questionsList.find(q => q.chest === chestNumber) || {
-              chest: chestNumber,
-              questions: ["Вопрос будет добавлен позже"]
-            };
-            const isOpened = openedChests.includes(chestNumber);
-            
-            return (
-              <div key={chestNumber} className="relative">
-                <button
-                  className={`w-full bg-transparent transition-all duration-300 transform ${
-                    isOpened 
-                      ? 'opacity-50 cursor-not-allowed filter grayscale' 
-                      : 'hover:scale-105'
-                  }`}
-                  onClick={() => handleChestClick(chest)}
-                  disabled={isOpened}
-                >
-                  <Image
-                    src={`/images/Sunduk_0${chestNumber}.png`}
-                    alt={`Сундук ${chestNumber}`}
-                    width={230}
-                    height={230}
-                    className="rounded-2xl"
-                  />
-                </button>
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 px-6 py-2 rounded-lg min-w-[60px] text-center">
-                  <span className="text-white text-2xl">
-                    №{chestNumber}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+        <div className="flex flex-col gap-12 max-w-7xl mx-auto px-4">
+          {/* Первый ряд */}
+          <div className="grid grid-cols-4 gap-12">
+            {firstRow.map(renderChest)}
+          </div>
+          {/* Средний ряд */}
+          <div className="grid grid-cols-3 gap-12 mx-auto">
+            {middleRow.map(renderChest)}
+          </div>
+          {/* Последний ряд */}
+          <div className="grid grid-cols-4 gap-12">
+            {lastRow.map(renderChest)}
+          </div>
         </div>
       </div>
 
