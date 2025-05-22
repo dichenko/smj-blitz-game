@@ -40,8 +40,10 @@ export default function Home() {
                   height={200}
                   className="rounded-2xl"
                 />
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-shadow-strong">
-                  №{chestNumber}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 px-4 py-1 rounded-lg">
+                  <span className="text-white text-shadow-strong">
+                    №{chestNumber}
+                  </span>
                 </div>
               </button>
             );
