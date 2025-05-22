@@ -17,7 +17,7 @@ export default function Home() {
       />
 
       <div className="relative z-10 flex flex-col items-center">
-        <h1 className="text-5xl font-bold mb-8 text-white text-shadow-strong bg-black/30 px-8 py-3 rounded-xl">
+        <h1 className="text-5xl font-bold mb-8 text-gray-800">
           Выбери сундук!
         </h1>
         <div className="grid grid-cols-4 gap-8 max-w-6xl mx-auto px-4">
@@ -28,24 +28,25 @@ export default function Home() {
             };
             
             return (
-              <button
-                key={chestNumber}
-                className="relative bg-transparent hover:scale-105 rounded-2xl shadow-xl text-2xl transition-all duration-300 transform"
-                onClick={() => setSelectedChest(chest)}
-              >
-                <Image
-                  src={`/images/Sunduk_0${chestNumber}.png`}
-                  alt={`Сундук ${chestNumber}`}
-                  width={200}
-                  height={200}
-                  className="rounded-2xl"
-                />
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 px-4 py-1 rounded-lg">
-                  <span className="text-white text-shadow-strong">
+              <div key={chestNumber} className="relative">
+                <button
+                  className="w-full bg-transparent hover:scale-105 transition-all duration-300 transform"
+                  onClick={() => setSelectedChest(chest)}
+                >
+                  <Image
+                    src={`/images/Sunduk_0${chestNumber}.png`}
+                    alt={`Сундук ${chestNumber}`}
+                    width={200}
+                    height={200}
+                    className="rounded-2xl"
+                  />
+                </button>
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 px-6 py-2 rounded-lg min-w-[60px] text-center">
+                  <span className="text-white text-2xl">
                     №{chestNumber}
                   </span>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
