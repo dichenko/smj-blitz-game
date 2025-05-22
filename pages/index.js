@@ -119,17 +119,19 @@ import { useEffect, useRef } from "react";
 
 function Game({ questions, onReset }) {
   const [qIndex, setQIndex] = useState(0);
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(qIndex === questions.length - 1 ? 30 : 5);
   const tickingRef = useRef();
   const bellRef = useRef();
 
   useEffect(() => {
+    // Устанавливаем начальное значение таймера в зависимости от номера вопроса
+    setTimer(qIndex === questions.length - 1 ? 30 : 5);
     tickingRef.current?.play();
     const interval = setInterval(() => {
       setTimer((t) => t - 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [qIndex]);
+  }, [qIndex, questions.length]);
 
   useEffect(() => {
     if (timer === 0) {
@@ -139,7 +141,6 @@ function Game({ questions, onReset }) {
       setTimeout(() => {
         if (qIndex < questions.length - 1) {
           setQIndex((i) => i + 1);
-          setTimer(10);
         } else {
           onReset();
         }
@@ -166,6 +167,9 @@ function Game({ questions, onReset }) {
         </button>
         <div className="text-2xl font-bold mb-6">{questions[qIndex]}</div>
         <div className="text-6xl font-mono text-orange-500 mb-2">{timer > 0 ? timer : "Время!"}</div>
+        <div className="text-sm text-gray-500">
+          {qIndex === questions.length - 1 ? "Время на размышление: 30 секунд" : "Время на размышление: 5 секунд"}
+        </div>
       </div>
     </div>
   );
