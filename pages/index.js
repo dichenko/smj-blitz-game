@@ -4,6 +4,19 @@ import Image from 'next/image';
 
 export default function Home() {
   const [selectedChest, setSelectedChest] = useState(null);
+  const [openedChests, setOpenedChests] = useState([]);
+
+  const handleChestClick = (chest) => {
+    if (!openedChests.includes(chest.chest)) {
+      setSelectedChest(chest);
+      setOpenedChests([...openedChests, chest.chest]);
+    }
+  };
+
+  const resetGame = () => {
+    setOpenedChests([]);
+    setSelectedChest(null);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative">
@@ -24,12 +37,18 @@ export default function Home() {
               chest: chestNumber,
               questions: ["Вопрос будет добавлен позже"]
             };
+            const isOpened = openedChests.includes(chestNumber);
             
             return (
               <div key={chestNumber} className="relative">
                 <button
-                  className="w-full bg-transparent hover:scale-105 transition-all duration-300 transform"
-                  onClick={() => setSelectedChest(chest)}
+                  className={`w-full bg-transparent transition-all duration-300 transform ${
+                    isOpened 
+                      ? 'opacity-50 cursor-not-allowed filter grayscale' 
+                      : 'hover:scale-105'
+                  }`}
+                  onClick={() => handleChestClick(chest)}
+                  disabled={isOpened}
                 >
                   <Image
                     src={`/images/Sunduk_0${chestNumber}.png`}
@@ -50,8 +69,33 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Кнопка сброса */}
+      <button
+        onClick={resetGame}
+        className="fixed bottom-8 right-8 z-20 bg-white/80 hover:bg-white p-3 rounded-full shadow-lg transition-colors"
+        title="Начать игру заново"
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-6 w-6" 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+          />
+        </svg>
+      </button>
+
       {selectedChest && (
-        <Game questions={selectedChest.questions} onReset={() => setSelectedChest(null)} />
+        <Game 
+          questions={selectedChest.questions} 
+          onReset={() => setSelectedChest(null)} 
+        />
       )}
     </div>
   );
