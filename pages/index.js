@@ -18,7 +18,7 @@ export default function Home() {
 
       <div className="relative z-10 flex flex-col items-center">
         <h1 className="text-6xl mb-16">Выбери сундук!</h1>
-        <div className="grid grid-cols-4 gap-8 max-w-6xl mx-auto px-4">
+        <div className="grid grid-cols-4 gap-12 max-w-7xl mx-auto px-4">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((chestNumber) => {
             const chest = questionsList.find(q => q.chest === chestNumber) || {
               chest: chestNumber,
@@ -34,8 +34,8 @@ export default function Home() {
                   <Image
                     src={`/images/Sunduk_0${chestNumber}.png`}
                     alt={`Сундук ${chestNumber}`}
-                    width={200}
-                    height={200}
+                    width={230}
+                    height={230}
                     className="rounded-2xl"
                   />
                 </button>
