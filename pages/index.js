@@ -83,20 +83,15 @@ function Game({ questions, onReset }) {
         if (qIndex < questions.length - 1) {
           setQIndex((i) => i + 1);
           setTimer(10);
+        } else {
+          onReset();
         }
       }, 1000);
     }
-  }, [timer, qIndex, questions.length]);
+  }, [timer, qIndex, questions.length, onReset]);
 
   if (qIndex === questions.length) {
-    return (
-      <div className="fixed inset-0 bg-black/80 flex flex-col items-center justify-center z-50">
-        <h2 className="text-4xl text-white font-bold mb-4">Финал!</h2>
-        <button className="bg-orange-400 text-white px-6 py-4 rounded-xl mt-4 text-xl" onClick={onReset}>
-          Начать заново
-        </button>
-      </div>
-    );
+    return null;
   }
 
   return (
