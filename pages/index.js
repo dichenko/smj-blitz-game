@@ -15,20 +15,11 @@ export default function Home() {
         className="object-cover z-0"
         priority
       />
-      
-      {/* Логотип */}
-      <div className="absolute top-4 right-4 z-10">
-        <Image
-          src="/images/New-Logo-Color (2).png"
-          alt="Smart J Logo"
-          width={150}
-          height={50}
-          priority
-        />
-      </div>
 
       <div className="relative z-10 flex flex-col items-center">
-        <h1 className="text-4xl font-bold mb-8 text-white text-shadow">Выбери сундук!</h1>
+        <h1 className="text-5xl font-bold mb-8 text-white text-shadow-strong bg-black/30 px-8 py-3 rounded-xl">
+          Выбери сундук!
+        </h1>
         <div className="grid grid-cols-4 gap-8 max-w-6xl mx-auto px-4">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((chestNumber) => {
             const chest = questionsList.find(q => q.chest === chestNumber) || {
@@ -49,7 +40,7 @@ export default function Home() {
                   height={200}
                   className="rounded-2xl"
                 />
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-shadow">
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-shadow-strong">
                   №{chestNumber}
                 </div>
               </button>
@@ -131,6 +122,17 @@ function Game({ questions, onReset }) {
 const styles = `
   .text-shadow {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .text-shadow-strong {
+    text-shadow: 
+      2px 2px 0 #000,
+      -2px -2px 0 #000,
+      2px -2px 0 #000,
+      -2px 2px 0 #000,
+      0 2px 0 #000,
+      2px 0 0 #000,
+      0 -2px 0 #000,
+      -2px 0 0 #000;
   }
 `;
 
