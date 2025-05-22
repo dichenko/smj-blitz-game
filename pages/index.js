@@ -62,7 +62,7 @@ import { useEffect, useRef } from "react";
 
 function Game({ questions, onReset }) {
   const [qIndex, setQIndex] = useState(0);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(5);
   const tickingRef = useRef();
   const bellRef = useRef();
 
